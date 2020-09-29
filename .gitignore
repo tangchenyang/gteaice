@@ -1,5 +1,4 @@
 .idea
-flink-demo/target
-*.class
 
+*.class
 target
