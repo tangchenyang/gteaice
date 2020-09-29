@@ -10,6 +10,8 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>installer</module>
+        <module>flink-demo</module>
+        <module>spark-demo</module>
     </modules>
 
 
