@@ -1,4 +1,5 @@
 package com.chenyangtang
+
 import org.apache.spark.SparkConf
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions.col
@@ -18,10 +19,15 @@ object SparkAQE {
       .config("spark.driver.host","127.0.0.1")
       .getOrCreate()
 
-    val moviesdf = spark.read.format("csv").option("header", "true").option("inferSchema", "true")
-      .load("file:///Users/twadmin/Downloads/ml-latest-small/movies.csv").repartition(col("movieId"))
+    val moviesdf = spark.read
+      .format("csv")
+      .option("header", "true")
+      .option("inferSchema", "true")
+      .load("file:///Users/twadmin/Downloads/ml-latest-small/movies.csv")
+      .repartition(col("movieId"))
 
     moviesdf.groupBy("movieId").count().show()
+
   }
 
 }

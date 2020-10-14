@@ -11,33 +11,43 @@ import org.apache.flink.table.types.logical.LogicalType;
 import org.apache.flink.table.types.utils.TypeConversions;
 
 public class FlinkTableEnvTest {
+    static TableEnvironment tableEnvironment = TableEnvironment.create(EnvironmentSettings
+            .newInstance()
+            .useBlinkPlanner()
+            .inBatchMode()
+            .build()
+    );
     public static void main(String[] args) throws Exception {
-        TableEnvironment tableEnvironment = TableEnvironment.create(EnvironmentSettings
-                .newInstance()
-                .useBlinkPlanner()
-                .inBatchMode()
-                .build()
-        );
 
         CsvTableSource csvTableSource = CsvTableSource.builder()
-                .path("file:///Users/twadmin/Downloads/ml-latest-small/student.csv")
+                .path("/Users/twadmin/IdeaProjects/gteaice/flink-demo/src/main/resources/student.csv")
                 .fieldDelimiter(",")
                 .field("id", DataTypes.INT())
                 .field("name", DataTypes.STRING())
                 .field("age", DataTypes.INT())
                 .field("gender", DataTypes.STRING())
-
                 .build();
-
-
-
         tableEnvironment.registerTableSource("sourceTable", csvTableSource);
-        Table count_by_gender = tableEnvironment.sqlQuery("select gender, count(1) from  sourceTable group by gender");
-        System.out.println(count_by_gender.explain());
-        count_by_gender.execute().print();
-//        .collect() .forEachRemaining(System.out::println);
+
+        printExplain("select gender, count(1) ct from sourceTable group by gender");
+        printExplain("select gender, count(1) ct from sourceTable group by gender having count(1) > 1");
+
+        printExplain("select gender from sourceTable group by gender");
+        printExplain("select distinct gender from sourceTable");
+        printExplain("select l.* from sourceTable l join sourceTable r on l.id = r.id ");
+        printExplain("select l.* from sourceTable l left join sourceTable r on l.id = r.id ");
+        printExplain("select l.* from sourceTable l left semi join sourceTable r on l.id = r.id ");
+
+        printExplain("select * from sourceTable order by id desc ");
 
 
-        tableEnvironment.execute("");
+    }
+
+    static void print(String msg){
+        System.out.println(msg);    }
+
+    static void printExplain(String sql){
+        print(String.format("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< %s >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", sql));
+        print(tableEnvironment.sqlQuery(sql).explain());
     }
 }
