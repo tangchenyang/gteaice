@@ -14,6 +14,6 @@ password=$(grep 'temporary password' /var/log/mysqld.log | awk -F 'root@localhos
 
 mysql -uroot -p"${password}" << EOF
 set global validate_password_policy=0;
-set global validate_password_length=6；
+set global validate_password_length=6;
 set password for 'root'@'localhost'=password('123456');
 EOF
