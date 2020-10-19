@@ -7,6 +7,7 @@ object MyImplicit {
 
 
 class MyString(s: String) {
+
   def counts = s.size
   def print= System.err.println(s)
 }

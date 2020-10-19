@@ -8,6 +8,11 @@ object Implicit {
     "hello world".print
     println("hello world".counts)
 
+    val a: Int = 1
+    val b: Int = 2
+    val c = a + b
+    val d = a.+(b)
+
   }
 }
 
