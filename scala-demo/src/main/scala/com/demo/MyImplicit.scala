@@ -2,7 +2,7 @@ package com.demo
 
 object MyImplicit {
   implicit def strToInt(str: String) = str.toInt
-  implicit def strToInt1(str: String) = new MyString(str)
+  implicit def strToInt1(str: java.lang.String) = new MyString(str)
 }
 
 
