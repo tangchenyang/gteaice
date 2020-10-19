@@ -143,3 +143,6 @@ EOF
 echo "<<<<<<<<<<<<<<<<< hdfs formath ... >>>>>>>>>>>>>>>>>>>"
 . ~/.bash_profile
 hdfs namenode -format
+
+### start all
+start-all.sh 

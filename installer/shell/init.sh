@@ -13,6 +13,7 @@ yum install vim -y
 rm -rf ~/.ssh
 ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa -q
 cat ~/.ssh/*.pub > ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys
+sed -i "s/#   StrictHostKeyChecking ask/StrictHostKeyChecking no/g" /etc/ssh/ssh_config
 
 # fireware
 systemctl stop firewalld.service
